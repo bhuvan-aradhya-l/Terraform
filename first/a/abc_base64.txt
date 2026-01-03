@@ -1,0 +1,1 @@
+This is a file created from terraform with Base 64 encoding.

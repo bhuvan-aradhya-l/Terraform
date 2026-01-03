@@ -1,0 +1,11 @@
+resource "local_file" "firstfile" {
+  filename = "abc.txt"
+  content  = "This is my third file created from terraform"
+}
+
+resource "local
+_file" "firstfile1" {
+  filename          = "a/b/abc1.txt"
+  sensitive_content = "This is my third file created from terraform with Base 64 encoding"
+}
+

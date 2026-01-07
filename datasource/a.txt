@@ -1,0 +1,12 @@
+<<EOT
+Practice of git tags
+Git reset
+
+
+fwerf
+
+wgw
+wgrehgrig wegr
+HELLO WORLD
+
+EOT

@@ -3,6 +3,7 @@
 
 # Sensitive Terraform files
 Terraform-AZ/provider.tf
+Terraform-AZ/alerts/provider.tf
 
 #Terraform files
 *.tfstate

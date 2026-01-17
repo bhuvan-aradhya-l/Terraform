@@ -1,3 +1,4 @@
+//Variable Initialization
 variable "content" {
   type    = any
   default = "common content"

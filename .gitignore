@@ -1,6 +1,6 @@
 # Terraform directories
 .terraform/
-/Terraform-AZ/provider.tf
+Terraform-AZ/provider.tf
 
 #Terraform files
 *.tfstate

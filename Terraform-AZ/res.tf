@@ -107,6 +107,12 @@ resource "azurerm_linux_virtual_machine" "vmtfBAL" {
     azurerm_network_interface.nic.id
   ]
 
+  lifecycle {
+    ignore_changes = [
+      size
+    ]
+  }
+
   admin_ssh_key {
     username   = "azureuser"
     public_key = file("~/.ssh/id_rsa.pub")

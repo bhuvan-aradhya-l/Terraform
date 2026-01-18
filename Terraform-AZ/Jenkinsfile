@@ -12,33 +12,41 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
+                dir('Terraform-AZ') {
                 sh '''
                   terraform init -input=false
                 '''
+                }
             }
         }
 
         stage('Terraform Validate') {
             steps {
+                dir('Terraform-AZ') {
                 sh '''
                   terraform validate
                 '''
+                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
+                dir('Terraform-AZ') {
                 sh '''
                   terraform plan -out=tfplan
                 '''
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
+                dir('Terraform-AZ') {
                 sh '''
                   terraform apply --auto-approve
                 '''
+                }
             }
         }
     }

@@ -43,13 +43,14 @@ pipeline {
                 dir('Terraform-LAW') {
                     script {
                         echo "--- Running Governance Check (Checkov) ---"
-                        // Installs Checkov to scan for security/tagging issues
-                        sh 'pip install checkov || true' 
                         
-                        // Runs the scan. 
-                        // --soft-fail: Reports issues but allows the pipeline to continue.
-                        // Remove --soft-fail later to strictly BLOCK bad code.
-                        sh 'checkov -d . --soft-fail' 
+                        // 1. Install Checkov using pip3 (more common on Ubuntu)
+                        // '--user' installs it just for the jenkins user to avoid permission errors
+                        sh 'pip3 install checkov --user' 
+                        
+                        // 2. Add the install location to PATH and run Checkov
+                        // (Python user installs usually go to ~/.local/bin)
+                        sh 'export PATH=$PATH:~/.local/bin && checkov -d . --soft-fail' 
                     }
                 }
             }

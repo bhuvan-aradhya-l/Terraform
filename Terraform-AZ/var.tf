@@ -1,22 +1,22 @@
 //resource group variables
 variable "location" {
-  default = "Northeurope"
+  default = "AustraliaEast"
   type    = string
 }
 
 variable "rg_name" {
-  default = "az-tf-BAL"
+  default = "cligroup1-BAL"
   type    = string
 }
 
 //vnet variables
 variable "address_space" {
-  default = ["172.0.0.0/16"]
+  default = ["10.0.0.0/16"]
   type    = list(string)
 }
 
 variable "vnet_name" {
-  default = "az_tf_vnet_BAL"
+  default = "tf_vnet_BAL"
   type    = string
 }
 
@@ -38,12 +38,12 @@ variable "address_prefix" {
   }))
   default = [
     {
-      name             = "az_tf_subnet_BAL"
-      address_prefixes = ["172.0.1.0/24"]
+      name             = "tf_subnet_BAL"
+      address_prefixes = ["10.0.1.0/24"]
     },
     {
-      name             = "az_tf_subnet2_BAL"
-      address_prefixes = ["172.0.2.0/24"]
+      name             = "tf_subnet2_BAL"
+      address_prefixes = ["10.0.2.0/24"]
     }
   ]
 }

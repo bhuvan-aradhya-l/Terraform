@@ -44,13 +44,12 @@ pipeline {
                     script {
                         echo "--- Running Governance Check (Checkov) ---"
                         
-                        // 1. Install Checkov using pip3 (more common on Ubuntu)
-                        // '--user' installs it just for the jenkins user to avoid permission errors
-                        sh 'pip3 install checkov --user' 
+                        // 1. Install Checkov (quietly to reduce log noise)
+                        sh 'pip3 install checkov --user -q' 
                         
-                        // 2. Add the install location to PATH and run Checkov
-                        // (Python user installs usually go to ~/.local/bin)
-                        sh 'export PATH=$PATH:~/.local/bin && checkov -d . --soft-fail' 
+                        // 2. Run Checkov using the DIRECT FULL PATH
+                        // This bypasses all PATH/environment issues
+                        sh '/var/lib/jenkins/.local/bin/checkov -d . --soft-fail' 
                     }
                 }
             }

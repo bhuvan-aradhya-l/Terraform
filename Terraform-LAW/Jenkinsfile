@@ -67,12 +67,13 @@ pipeline {
         }
 
         stage('Terraform Apply') {
+            // ONLY run Apply if we are on the 'master' branch
+            when {
+                branch 'master'
+            }
             steps {
                 dir('Terraform-LAW') {
-                // This step applies the TAGS using the null_resource we created
-                sh '''
-                  terraform apply -lock=false --auto-approve
-                '''
+                   sh 'terraform apply -lock=false --auto-approve'
                 }
             }
         }

@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+    
+    environment {
+        ARM_CLIENT_ID       = credentials('AZURE_CLIENT_ID')
+        ARM_CLIENT_SECRET   = credentials('AZURE_CLIENT_SECRET')
+        ARM_SUBSCRIPTION_ID = credentials('AZURE_SUBSCRIPTION_ID')
+        ARM_TENANT_ID       = credentials('AZURE_TENANT_ID')
+    }
+    
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/bhuvan-aradhya-l/Terraform.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                dir('Terraform-LAW') { 
+                sh '''
+                  terraform init -input=false
+                '''
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                dir('Terraform-LAW') {
+                sh '''
+                  terraform validate
+                '''
+                }
+            }
+        }
+
+        // --- NEW STAGE FOR SCENARIO 14 ---
+        stage('Security Compliance Scan') {
+            steps {
+                dir('Terraform-LAW') {
+                    script {
+                        echo "--- Running Governance Check (Checkov) ---"
+                        // Installs Checkov to scan for security/tagging issues
+                        sh 'pip install checkov || true' 
+                        
+                        // Runs the scan. 
+                        // --soft-fail: Reports issues but allows the pipeline to continue.
+                        // Remove --soft-fail later to strictly BLOCK bad code.
+                        sh 'checkov -d . --soft-fail' 
+                    }
+                }
+            }
+        }
+        // ---------------------------------
+
+        stage('Terraform Plan') {
+            steps {
+                dir('Terraform-LAW') {
+                sh '''
+                  terraform plan -out=tfplan
+                '''
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir('Terraform-LAW') {
+                // This step applies the TAGS using the null_resource we created
+                sh '''
+                  terraform apply -lock=false --auto-approve
+                '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Terraform pipeline executed successfully"
+        }
+        failure {
+            echo "Terraform pipeline failed"
+        }
+    }
+}

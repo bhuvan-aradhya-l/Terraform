@@ -4,8 +4,8 @@ data "azurerm_resource_group" "rg" {
 
 resource "azurerm_postgresql_flexible_server" "postgres" {
   name                   = "bhuvan-postgres-flex"
-  resource_group_name    = azurerm_resource_group.rg.name
-  location               = azurerm_resource_group.rg.location
+  resource_group_name    = data.azurerm_resource_group.rg.name
+  location               = data.azurerm_resource_group.rg.location
   version                = "14"
   administrator_login    = "pgadmin"
   administrator_password = "@Aradhya12345!"

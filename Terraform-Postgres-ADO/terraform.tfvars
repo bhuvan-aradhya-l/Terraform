@@ -1,1 +1,1 @@
-resource_group_name      = "rg-BAL"
+resource_group_name      = "rg-BAL-DB"

@@ -3,7 +3,7 @@ data "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_postgresql_flexible_server" "postgres" {
-  name                   = "bhuvan-postgres-flex"
+  name                   = "postgres-ado-tf-flex-bal"
   resource_group_name    = data.azurerm_resource_group.rg.name
   location               = data.azurerm_resource_group.rg.location
   version                = "14"

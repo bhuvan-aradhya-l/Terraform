@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ADOAgentPool'
+  name: 'ADOAgentPool'
 
 variables:
   terraformVersion: '1.6.6'
